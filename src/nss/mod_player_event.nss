@@ -60,8 +60,6 @@ void EmptyInventory(object oPC)
     AssignCommand(oPC, TakeGoldFromCreature(iGold, oPC, TRUE));
 }
 
-
-void NameChecker(object oPC);
 void NameChecker(object oPC)
 {
     string sName = GetStringUpperCase(GetName(oPC));
@@ -105,7 +103,6 @@ void NameChecker(object oPC)
     }
 }
 // -- Store heartbeat location data
-void StoreHeartbeatLocation(object oPC);
 void StoreHeartbeatLocation(object oPC){
   object oArea = GetArea(oPC);
   string sAreaTag = GetTag(oArea);
@@ -128,7 +125,6 @@ void StoreHeartbeatLocation(object oPC){
 }    
 
 // -- Store savepoint location data
-void SetSavepointLocation(object oPC);
 void SetSavepointLocation(object oPC){
   object oArea = GetArea(oPC);
   string sAreaTag = GetTag(oArea);
@@ -151,7 +147,6 @@ void SetSavepointLocation(object oPC){
 }
 
 // -- Store reboot location data
-void SetRebootLocation(object oPC);
 void SetRebootLocation(object oPC){
   object oArea = GetArea(oPC);
   string sAreaTag = GetTag(oArea);
@@ -173,7 +168,6 @@ void SetRebootLocation(object oPC){
   NWNX_Redis_GETSET("nwserver:players:"+sPcName+":save:reboot:facing",sPcFacing);
 }
 
-void HeadStart(object oPC);
 void HeadStart(object oPC)
 {
     int oPCHP = GetXP(oPC);
@@ -190,14 +184,16 @@ void HeadStart(object oPC)
     }
 }
 
-void SavePC(object oPC);
 void SavePC(object oPC){
-  StoreHeartbeatLocation(oPC);
   ExportSingleCharacter(oPC);
-  object oPC = GetNextPC();
 }
 
-void SaveAllPC();
+void EventSavePC(object oPC){
+  SetSavepointLocation(oPC);
+  ExportSingleCharacter(oPC);
+}
+
+
 void SaveAllPC()
 {
   object oPC = GetFirstPC();
@@ -208,7 +204,6 @@ void SaveAllPC()
    }
 }
 
-void DeleteCharacter(object oPC);
 void DeleteCharacter(object oPC)
 {
   string sPCName = GetName(oPC);
@@ -216,7 +211,6 @@ void DeleteCharacter(object oPC)
   NWNX_Administration_DeletePlayerCharacter(oPC);
 }
 
-void stripEquipped(object oPC, object oEquip);
 void stripEquipped(object oPC, object oEquip)
 {
  if(GetIsObjectValid(oEquip))
@@ -235,7 +229,6 @@ void stripEquipped(object oPC, object oEquip)
 
 }
 
-void StripDM(object oPC);
 void StripDM(object oPC)
 {
     // DM Inventory manage
@@ -248,7 +241,6 @@ void StripDM(object oPC)
     }
 }
 
-void AutoBoot(object oPC);
 void AutoBoot(object oPC)
 {    
     if(GetLocalInt(oPC, "AUTOBOOT") == 1)  //If a player gets set autoboot, they can't stay connected.

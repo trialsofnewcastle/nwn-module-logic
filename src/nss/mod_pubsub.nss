@@ -8,7 +8,6 @@
 #include "mod_player_event"
 
 // -- Webhook function
-void WebHookGo(string sReason,string sMessage);
 void WebHookGo(string sReason,string sMessage){
   object oMod = GetModule();
 
@@ -25,30 +24,29 @@ void WebHookGo(string sReason,string sMessage){
   // -- Module update alert
   if(sReason == "module" && sMessage == "update"){
     string sWebhookMessage = "Module update found:" + sMessage + " || on: " + sCurrentDate;
-    NWNX_WebHook_SendWebHookHTTPS("discordapp.com",sPublicWebhookUrl, sWebhookMessage, "Module Update");
+    SendbWebhook("public", sWebhookMessage , "Reboot");
   }  
 
   // -- Module Update proceed
   if(sReason == "module"){
     string sWebhookMessage = "Server rebooting for module update:" + sMessage + " || on: " + sCurrentDate;
-    NWNX_WebHook_SendWebHookHTTPS("discordapp.com",sPublicWebhookUrl, sWebhookMessage, "Module Update");
+    SendbWebhook("public", sWebhookMessage , "Reboot");
   }
 
   // -- Nwnxee Update proceed
   if(sReason == "nwnxee"){
     string sWebhookMessage = "Server rebooting for nwnxee update:" + sMessage + " || on: " + sCurrentDate;
-    NWNX_WebHook_SendWebHookHTTPS("discordapp.com",sPublicWebhookUrl, sWebhookMessage, "Module Update");
+    SendbWebhook("public", sWebhookMessage , "Reboot");
   }
 
   // -- not in the right place
   else{
     string sWebhookMessage = "Unknown pubsub || on: " + sCurrentDate;
-    NWNX_WebHook_SendWebHookHTTPS("discordapp.com",sPublicWebhookUrl, sWebhookMessage, "Module Update");
+    SendbWebhook("public", sWebhookMessage , "Reboot");
   }
 }
 
 // -- The fun stuff
-void ContinuousIntegration(string sReason, string sMessage);
 void ContinuousIntegration(string sReason, string sMessage)
 {    
   object oMod = GetModule();

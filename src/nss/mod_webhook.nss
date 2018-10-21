@@ -13,14 +13,13 @@ int iWebhookVarExists()
     {
         string sMessage = "Missing webhook vars on module, you need these to use webhooks.";
         WriteTimestampedLogEntry(sMessage);
-        return 0;
+        return 1;
     }
     else {
-        return 1;
+        return 0;
     }
 }
 
-void SendbWebhook(string sPermission, string sMessage, string sSendername);
 void SendbWebhook(string sPermission, string sMessage, string sSendername)
 {
     if (sPermission == "public")
@@ -49,7 +48,6 @@ void SendbWebhook(string sPermission, string sMessage, string sSendername)
     }
 }
 
-void LoginWebhook(object oPC);
 void LoginWebhook(object oPC)
 {
     string CurrentTime = NWNX_Time_GetSystemTime();
@@ -67,7 +65,6 @@ void LoginWebhook(object oPC)
     SendbWebhook("public", sMessage , "Login");
 }
 
-void LogoutWebhook(object oPC);
 void LogoutWebhook(object oPC)
 {
     string CurrentTime = NWNX_Time_GetSystemTime();
@@ -85,7 +82,6 @@ void LogoutWebhook(object oPC)
     SendbWebhook("public", sMessage , "Logout");
 }
 
-void DEBUG_STRING(string sMessage);
 void DEBUG_STRING(string sMessage)
 {
     string sMessageDate = NWNX_Time_GetSystemDate();
@@ -94,7 +90,6 @@ void DEBUG_STRING(string sMessage)
     SendbWebhook("debug", sMessageFinal , "DEBUG");
 }
 
-void DEBUG_OBJECT(object oObject, string sString);
 void DEBUG_OBJECT(object oObject, string sString)
 {
     string sMessageDate = NWNX_Time_GetSystemDate();

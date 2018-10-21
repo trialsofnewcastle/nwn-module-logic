@@ -108,7 +108,7 @@ string Color_Text(string ColorCode, string sText)
         else if (ColorCode == "wood")        ColorCode = "<c‘Z(>";
         else if (ColorCode == "tan")         ColorCode = "<cß‘F>";
         else if (ColorCode == "flesh")       ColorCode = "<cû¥Z>";
-        else if (ColorCode == "dark orange") ColorCode = "<cð>";
+        else if (ColorCode == "dark orange") ColorCode = "<cð>";
 
     return ColorCode + sText + "</c>";
 }
