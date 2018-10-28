@@ -1,30 +1,35 @@
 version: '3'
 services:
   redis:
-    hostname: redis
-    image: healthcheck/redis:latest
+    image: redis:latest
     command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
     volumes:
       - ${PWD-.}/redis:/data
     restart: unless-stopped
+  redisCommander:
+    image: rediscommander/redis-commander
+    env_file: ${PWD-.}/config/redis-commander.env
+    links:
+      - redis:redis
+    ports:
+      - "8081:8081"
   caddy:
     hostname: caddy
     image: abiosoft/caddy:latest
     ports:
-        -   8080:8080
+      - "8080:8080"
     command: -root ./nwsync -port 8080 gzip
     restart: unless-stopped
   nwnxee-server:
     hostname: nwnxee
-    image: nwnxee/unified:dev-nwsync
+    image: nwnxee/unified:latest
     env_file: ${PWD-.}/config/nwserver.env
     stdin_open: true
     tty: true
     links:
-      - "db:db"
       - "redis:redis"
     depends_on:
-      - db
       - redis
     volumes:
       - ${PWD-.}/logs:/nwn/run/logs.0

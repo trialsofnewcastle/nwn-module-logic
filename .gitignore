@@ -1,4 +1,4 @@
-
+*.log
 *.mod*
 *.ncs
 /var/www/nwsync/*

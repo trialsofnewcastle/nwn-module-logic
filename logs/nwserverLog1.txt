@@ -1,0 +1,22 @@
+[Sun Oct 28 00:32:06] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 00:34:04] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 00:46:26] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 00:49:14] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:1024
+[Sun Oct 28 01:08:59] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:1024
+[Sun Oct 28 01:38:03] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:1024
+[Sun Oct 28 01:47:22] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 02:02:58] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 02:16:40] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 02:19:23] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:1024
+[Sun Oct 28 02:28:35] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
