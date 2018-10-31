@@ -1,4 +1,4 @@
-#include "mod_player_event"
+#include "rds_player_event"
 
 void main()
 {

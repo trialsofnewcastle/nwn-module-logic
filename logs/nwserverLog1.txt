@@ -20,3 +20,11 @@ Our public address as seen by the masterserver: 71.238.137.193:5121
 Our public address as seen by the masterserver: 71.238.137.193:1024
 [Sun Oct 28 02:28:35] Loading Module: Logic
 Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 03:48:24] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 03:50:52] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 05:08:47] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121
+[Sun Oct 28 05:12:19] Loading Module: Logic
+Our public address as seen by the masterserver: 71.238.137.193:5121

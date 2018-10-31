@@ -240,6 +240,15 @@ MAIN:
       - !nwn-lib.elv.es,2013-07:struct
         __struct_id: 0
         ID: {type: byte, value: 0}
+        LIST:
+          type: list
+          value:
+          - !nwn-lib.elv.es,2013-07:struct
+            __struct_id: 0
+            CR: {type: float, value: 1.0}
+            FACTION: {type: cexostr, value: Defender}
+            NAME: {type: cexostr, value: system_bank_}
+            RESREF: {type: resref, value: system_bank_}
         STRREF: {type: dword, value: 6688}
       - !nwn-lib.elv.es,2013-07:struct
         __struct_id: 0

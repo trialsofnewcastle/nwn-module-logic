@@ -12,7 +12,8 @@ Encounter List:
   value: []
 List:
   type: list
-  value: []
+  value:
+  - !nwn-lib.elv.es,2013-07:struct {__struct_id: 0, Comment: {type: cexostr, value: ''}}
 Placeable List:
   type: list
   value: []

@@ -17,7 +17,8 @@ Mod_CutSceneList:
 Mod_DawnHour: {type: byte, value: 6}
 Mod_Description:
   type: cexolocstr
-  value: {}
+  value:
+    0: ''
 Mod_DuskHour: {type: byte, value: 18}
 Mod_Entry_Area: {type: resref, value: area001}
 Mod_Entry_Dir_X: {type: float, value: 0.0}

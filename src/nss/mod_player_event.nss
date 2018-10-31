@@ -1,7 +1,46 @@
 #include "mod_misc_color"
-#include "rds_player_event"
 #include "mod_webhook"
 #include "nwnx_admin"
+#include "x0_i0_position"
+
+string sPCVector(object oPC){
+  vector vPosition    = GetPosition(oPC);
+  string sVector      = VectorToString(vPosition);
+  return sVector;
+}
+
+string sPCFacing(object oPC){
+  float fOrientation  = GetFacing(oPC);
+  string sPcFacing    = FloatToString(fOrientation);
+  return sPcFacing;
+}
+
+string sPCAreaTag(object oPC){
+  object oArea        = GetArea(oPC);
+  string sAreaTag     = GetTag(oArea);
+  return sAreaTag;
+}
+
+int GetIsAPCInArea(object oArea, int bNPCPartyMembers = TRUE);
+int GetIsAPCInArea(object oArea, int bNPCPartyMembers = TRUE)
+{
+    object oPC = GetFirstPC();
+    while (GetIsObjectValid(oPC))
+    {
+        if(bNPCPartyMembers)
+        {
+            object oFaction = GetFirstFactionMember(oPC, FALSE);
+            while(GetIsObjectValid(oFaction))
+            {
+                if (GetArea(oFaction) == oArea)
+                    return TRUE;
+                oFaction = GetNextFactionMember(oPC, FALSE);
+            }
+        }
+        oPC = GetNextPC();
+    }
+    return FALSE;
+}
 
 void HeadStart(object oPC)
 {
@@ -10,9 +49,9 @@ void HeadStart(object oPC)
     if (GetIsDM(oPC))
     {
         return;
-    }   
+    }
 
-    if (oPCHP <= 1000) 
+    if (oPCHP <= 1000)
     {
         SetXP(oPC, 10000);
         return;
@@ -20,7 +59,7 @@ void HeadStart(object oPC)
 }
 
 void AutoBoot(object oPC)
-{    
+{
     if(GetLocalInt(oPC, "AUTOBOOT") == 1)  //If a player gets set autoboot, they can't stay connected.
     {                                      //This is to hold off whankers until I can add them to the banned list.
       DelayCommand(3.0, BootPC(oPC));
@@ -129,19 +168,4 @@ void NameChecker(object oPC)
     }
 }
 
-void SavePC(object oPC){
-  SetSavepointLocation(oPC);
-  ExportSingleCharacter(oPC);
-}
-
-void SaveAllPC()
-{
-  object oPC = GetFirstPC();
-  while(GetIsObjectValid(oPC))
-  {
-      SavePC(oPC);
-      oPC = GetNextPC();
-  }
-  NWNX_Redis_SAVE();
-}
 
