@@ -34,8 +34,10 @@ void main()
     int nPlayerBankExists =  NWNX_Redis_EXISTS("nwserver:players:"+sID+":bank:item");
     location lBankSpawn = GetAheadLocation(oPC);
 
+    // Check area for bank creature first
     if (GetIsPlayerBankInArea(oArea, sBankResRef, oPC) == 0)
     {
+        // If this is the first time they are using the item
         if (nPlayerBankExists == 0){
             // generate creature
             int nObjectType = OBJECT_TYPE_CREATURE;
@@ -43,7 +45,6 @@ void main()
             SetLocalInt(oBank,"ISBANK",1);
             SetTag(oBank,sBankResRef);
 
-            // after we get it all setup properly.
             // Store initial blank creature.
             NWNX_Object_Serialize(oBank);
 
@@ -51,6 +52,7 @@ void main()
             OpenInventory(oBank,oPC);
 
         }
+        // if user has bank setup already
         else {
             string sBank = NWNX_Redis_GET("nwserver:players:"+sID+":bank:item");
             object oBank = NWNX_Object_Deserialize(sBank);
@@ -73,34 +75,6 @@ void main()
                 return;
              }
              object oObject = GetNextObjectInArea(oArea);
-        }
-    }
-
-
-}
-
-// probably on area leave
-void HandHeldBankCleanup(object oArea)
-{
-    object oPC = GetExitingObject();
-    object oObject = GetFirstObjectInArea(oArea);
-    string sID   = GetPlayerID(oPC);
-    string sBankResRef = "BANK."+sID;
-
-    while(GetIsObjectValid(oObject))
-    {
-        if(GetIsAPCInArea(oArea) == 0){
-
-            int iIsaBank = GetLocalInt(oObject, "ISABANK");
-            if(iIsaBank == 1)
-            {
-                DestroyObject(oObject);
-            }
-            object oObject = GetNextObjectInArea(oArea);
-        }
-
-        else{
-            SetLocalInt(oArea,"BANKINAREA",0);
         }
     }
 }
