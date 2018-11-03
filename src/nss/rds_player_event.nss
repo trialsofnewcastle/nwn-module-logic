@@ -10,11 +10,13 @@ void SavePC(object oPC){
 void SaveAllPC()
 {
   object oPC = GetFirstPC();
+  
   while(GetIsObjectValid(oPC))
   {
       SavePC(oPC);
       oPC = GetNextPC();
   }
+
   NWNX_Redis_SAVE();
 }
 
