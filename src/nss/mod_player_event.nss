@@ -9,8 +9,7 @@ void SaveAllPC()
   object oPC = GetFirstPC();
   while(GetIsObjectValid(oPC))
   {
-      ExportSingleCharacter(oPC);
-      oPC = GetNextPC();
+    ExportAllCharacters();
   }
   SaveRedis();
 }

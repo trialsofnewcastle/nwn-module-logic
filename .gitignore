@@ -2,6 +2,7 @@
 *.mod*
 *.ncs
 /var/www/nwsync/*
-/logs/*
-/.nwnproject/cache/*
-/redis/*
+/logs
+.nwnproject/cache/*
+/redis/
+/server/
