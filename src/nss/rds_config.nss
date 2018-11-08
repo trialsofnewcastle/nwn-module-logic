@@ -1,4 +1,4 @@
-
+#include "nwnx_redis"
 
 string GetPlayerID(object oPC);
 string GetPlayerID(object oPC)
@@ -15,6 +15,6 @@ string RdsPlayerEdge(object oPC){
 
 string RdsServerEdge(string sScriptName);
 string RdsServerEdge(string sScriptName){
-    string sEdge = "nwserver:server:"+sScriptName);
+    string sEdge = "nwserver:server:"+sScriptName;
     return sEdge;
 }

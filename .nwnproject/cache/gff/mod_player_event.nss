@@ -1,7 +1,37 @@
 #include "mod_misc_color"
-#include "rds_player_event"
 #include "mod_webhook"
 #include "nwnx_admin"
+#include "rds_mod_event"
+#include "x0_i0_position"
+
+void SaveAllPC()
+{
+  object oPC = GetFirstPC();
+  while(GetIsObjectValid(oPC))
+  {
+      ExportSingleCharacter(oPC);
+      oPC = GetNextPC();
+  }
+  SaveRedis();
+}
+
+string sPCVector(object oPC){
+  vector vPosition    = GetPosition(oPC);
+  string sVector      = VectorToString(vPosition);
+  return sVector;
+}
+
+string sPCFacing(object oPC){
+  float fOrientation  = GetFacing(oPC);
+  string sPcFacing    = FloatToString(fOrientation);
+  return sPcFacing;
+}
+
+string sPCAreaTag(object oPC){
+  object oArea        = GetArea(oPC);
+  string sAreaTag     = GetTag(oArea);
+  return sAreaTag;
+}
 
 int GetIsAPCInArea(object oArea, int bNPCPartyMembers = TRUE);
 int GetIsAPCInArea(object oArea, int bNPCPartyMembers = TRUE)
@@ -150,19 +180,4 @@ void NameChecker(object oPC)
     }
 }
 
-void SavePC(object oPC){
-  SetSavepointLocation(oPC);
-  ExportSingleCharacter(oPC);
-}
-
-void SaveAllPC()
-{
-  object oPC = GetFirstPC();
-  while(GetIsObjectValid(oPC))
-  {
-      SavePC(oPC);
-      oPC = GetNextPC();
-  }
-  NWNX_Redis_SAVE();
-}
 

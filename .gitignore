@@ -3,4 +3,5 @@
 *.ncs
 /var/www/nwsync/*
 /logs/*
-./nwnproject/cache/*
+/.nwnproject/cache/*
+/redis/*

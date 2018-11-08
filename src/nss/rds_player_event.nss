@@ -3,23 +3,6 @@
 #include "rds_config"
 #include "mod_player_event"
 
-void SavePC(object oPC){
-  ExportSingleCharacter(oPC);
-}
-
-void SaveAllPC()
-{
-  object oPC = GetFirstPC();
-  
-  while(GetIsObjectValid(oPC))
-  {
-      SavePC(oPC);
-      oPC = GetNextPC();
-  }
-
-  NWNX_Redis_SAVE();
-}
-
 // -- Store some info on login
 void StoreGenericInformation(object oPC)
 {

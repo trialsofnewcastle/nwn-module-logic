@@ -6,6 +6,7 @@
 #include "x0_i0_position"
 
 #include "mod_player_event"
+#include "rds_player_event"
 
 // -- Webhook function
 void WebHookGo(string sReason,string sMessage){

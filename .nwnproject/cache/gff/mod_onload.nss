@@ -1,8 +1,17 @@
 #include "nwnx_time"
 #include "mod_webhook"
+#include "nwnx_redis"
+#include "nwnx_events"
 
 void main()
 {
+    // -- Redis setup
+    // auth
+    NWNX_Redis_AUTH("password");
+    // redis stats
+    string sDBSize= IntToString(NWNX_Redis_DBSIZE());
+    WriteTimestampedLogEntry(sDBSize);
+
     object oMod = GetModule();
 
     // -- Protect against naughty DMs
@@ -79,4 +88,9 @@ void main()
     SetEventScript(oMod,3016,"mod_unequipitem");
     // -- Module OnPlayerChat Event
     SetEventScript(oMod,3017,"mod_chat");
+
+    // -- Module NWNX Events
+    NWNX_Events_SubscribeEvent("NWNX_ON_PARTY_ACCEPT_INVITATION_BEFORE", "e_party_accept_b");
+    NWNX_Events_SubscribeEvent("NWNX_ON_PARTY_LEAVING_AFTER", "e_party_leave_a");
+    NWNX_Events_SubscribeEvent("NWNX_ON_USE_ITEM_BEFORE", "e_item_use_b");
 }

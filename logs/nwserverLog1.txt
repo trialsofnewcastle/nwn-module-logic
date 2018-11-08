@@ -28,3 +28,9 @@ Our public address as seen by the masterserver: 71.238.137.193:5121
 Our public address as seen by the masterserver: 71.238.137.193:5121
 [Sun Oct 28 05:12:19] Loading Module: Logic
 Our public address as seen by the masterserver: 71.238.137.193:5121
+[Tue Nov  6 04:05:59] Loading Module: Logic
+[Tue Nov  6 04:05:59] Server Shutting Down
+[Tue Nov  6 04:06:03] Loading Module: Logic
+[Tue Nov  6 04:06:03] Server Shutting Down
+[Tue Nov  6 04:06:06] Loading Module: Logic
+[Tue Nov  6 04:06:06] Server Shutting Down

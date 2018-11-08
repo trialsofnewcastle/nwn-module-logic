@@ -11,12 +11,7 @@ void main()
         break;
 
     case 002:
-        object oPC = GetFirstPC();
-        while(GetIsObjectValid(oPC))
-        {
-            SavePC(oPC);
-            oPC = GetNextPC();
-        }
+        SaveAllPC();
         DelayCommand(600.0, SignalEvent(OBJECT_SELF, EventUserDefined(002)));
     }
 }

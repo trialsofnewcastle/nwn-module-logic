@@ -1,8 +1,16 @@
 #include "nwnx_time"
 #include "mod_webhook"
+#include "nwnx_redis"
 
 void main()
 {
+    // -- Redis setup
+    // auth
+    NWNX_Redis_AUTH("password");
+    // redis stats
+    string sDBSize= IntToString(NWNX_Redis_DBSIZE());
+    WriteTimestampedLogEntry(sDBSize);
+
     object oMod = GetModule();
 
     // -- Protect against naughty DMs

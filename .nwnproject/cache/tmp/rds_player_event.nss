@@ -1,86 +1,53 @@
 #include "nwnx_time"
 #include "nwnx_redis"
-#include "x0_i0_position"
 #include "rds_config"
+#include "mod_player_event"
+
+void SavePC(object oPC){
+  ExportSingleCharacter(oPC);
+}
+
+void SaveAllPC()
+{
+  object oPC = GetFirstPC();
+  
+  while(GetIsObjectValid(oPC))
+  {
+      SavePC(oPC);
+      oPC = GetNextPC();
+  }
+
+  NWNX_Redis_SAVE();
+}
 
 // -- Store some info on login
 void StoreGenericInformation(object oPC)
 {
-  string sPcName = GetPCPlayerName(oPC);
-  string sIP = GetPCIPAddress(oPC);
-  string CDKey = GetPlayerID(oPC);
-
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":information:name",sPcName);
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":information:ip",sIP);
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":information:cdkey",CDKey);
+  // -- Set Redis
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":information:name",GetPCPlayerName(oPC));
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":information:ip",GetPCIPAddress(oPC));
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":information:cdkey",GetPlayerID(oPC));
 }
-
 
 // -- Store heartbeat location data
 void StoreHeartbeatLocation(object oPC){
-  object oArea = GetArea(oPC);
-  string sAreaTag = GetTag(oArea);
-  string sPcName = GetPCPlayerName(oPC);
-  string CDKey = GetPlayerID(oPC);
-
-  // -- Locate where in the area we are
-  vector vPosition = GetPosition(oPC);
-
-  // -- Identify the direction we are facing
-  float fOrientation = GetFacing(oPC);
-
-  // -- Convert stuff to strings
-  string sVector = VectorToString(vPosition);
-  string sPcFacing = FloatToString(fOrientation);
-
   // -- Set Redis
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:heartbeat:areatag",sAreaTag);
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:heartbeat:vector",sVector);
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:heartbeat:facing",sPcFacing);
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:heartbeat:areatag",sPCAreaTag(oPC));
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:heartbeat:vector",sPCVector(oPC));
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:heartbeat:facing",sPCFacing(oPC));
 }
 
 // -- Store savepoint location data
 void SetSavepointLocation(object oPC){
-  object oArea = GetArea(oPC);
-  string sAreaTag = GetTag(oArea);
-  string sPcName = GetPCPlayerName(oPC);
-  string CDKey = GetPlayerID(oPC);
-
-  // -- Locate where in the area we are
-  vector vPosition = GetPosition(oPC);
-
-  // -- Identify the direction we are facing
-  float fOrientation = GetFacing(oPC);
-
-  // -- Convert stuff to strings
-  string sVector = VectorToString(vPosition);
-  string sPcFacing = FloatToString(fOrientation);
-
   // -- Set Redis
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:savepoint:areatag",sAreaTag);
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:savepoint:vector",sVector);
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:savepoint:facing",sPcFacing);
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:savepoint:areatag",sPCAreaTag(oPC));
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:savepoint:vector",sPCVector(oPC));
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:savepoint:facing",sPCFacing(oPC));
 }
-
 // -- Store reboot location data
 void SetRebootLocation(object oPC){
-  object oArea = GetArea(oPC);
-  string sAreaTag = GetTag(oArea);
-  string sPcName = GetPCPlayerName(oPC);
-  string CDKey = GetPlayerID(oPC);
-
-  // -- Locate where in the area we are
-  vector vPosition = GetPosition(oPC);
-
-  // -- Identify the direction we are facing
-  float fOrientation = GetFacing(oPC);
-
-  // -- Convert stuff to strings
-  string sVector = VectorToString(vPosition);
-  string sPcFacing = FloatToString(fOrientation);
-
   // -- Set Redis
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:reboot:facing",sAreaTag);
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:reboot:vector",sVector);
-  NWNX_Redis_SET("nwserver:players:"+CDKey+":"+sPcName+":save:reboot:facing",sPcFacing);
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:reboot:facing",sPCAreaTag(oPC));
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:reboot:vector",sPCVector(oPC));
+  NWNX_Redis_SET(RdsPlayerEdge(oPC)+":save:reboot:facing",sPCFacing(oPC));
 }

@@ -1,7 +1,19 @@
 #include "mod_misc_color"
 #include "mod_webhook"
 #include "nwnx_admin"
+#include "rds_mod_event"
 #include "x0_i0_position"
+
+void SaveAllPC()
+{
+  object oPC = GetFirstPC();
+  while(GetIsObjectValid(oPC))
+  {
+      ExportSingleCharacter(oPC);
+      oPC = GetNextPC();
+  }
+  SaveRedis();
+}
 
 string sPCVector(object oPC){
   vector vPosition    = GetPosition(oPC);
