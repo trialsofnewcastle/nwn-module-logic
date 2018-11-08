@@ -1,13 +1,15 @@
-#include "nwnx_time"
 #include "nwnx_redis"
+
+#include "log"
 
 void SaveRedis()
 {
     if (GetLocalString(GetModule(), "SAVE_REDIS") == "FALSE")
     {
-        // SetLocalString(GetModule(), "SAVE_REDIS", "TRUE");
         NWNX_Redis_BGSAVE();
-        WriteTimestampedLogEntry("Redis is saving");
-        // SetLocalString(GetModule(), "SAVE_REDIS", "FALSE");
+        int nTime = NWNX_Time_GetTimeStamp();
+        string sTime = IntToString(nTime);
+        string sMessage = "Redis is saving : "+ sTime;
+        Log(sMessage,"1");
     }
 }

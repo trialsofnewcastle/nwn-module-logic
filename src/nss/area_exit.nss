@@ -3,9 +3,9 @@
 
 void HhBankCleanup(object oArea, object oPC)
 {
-    object oObject = GetFirstObjectInArea(oArea);
-    string sID   = GetPlayerID(oPC);
-    string sBankResRef = "BANK."+sID;
+    object oObject     = GetFirstObjectInArea(oArea);
+    string sUUID       = PlayerUUID(oPC);
+    string sBankResRef = "BANK."+sUUID;
 
     while(GetIsObjectValid(oObject))
     {

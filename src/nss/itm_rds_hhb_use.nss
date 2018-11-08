@@ -8,8 +8,8 @@
 int GetIsPlayerBankInArea(object oArea, string sResRef, object oPC);
 int GetIsPlayerBankInArea(object oArea, string sResRef, object oPC)
 {
-    string sID  = GetPlayerID(oPC);
-    string sBankResRef = "system_bank_"+sID;
+    string sUuid  = PlayerUUID(oPC);
+    string sBankResRef = "system_bank_"+sUuid;
 
     object oObject = GetFirstObjectInArea(oArea);
     while(GetIsObjectValid(oObject))
@@ -27,11 +27,11 @@ int GetIsPlayerBankInArea(object oArea, string sResRef, object oPC)
 void main()
 {
     object oPC = OBJECT_SELF;
-    string sID   = GetPlayerID(oPC);
-    string sBankResRef = "system_bank_"+sID;
+    string sUuid   = PlayerUUID(oPC);
+    string sBankResRef = "system_bank_"+sUuid;
     object oArea = GetArea(oPC);
 
-    int nPlayerBankExists =  NWNX_Redis_EXISTS("nwserver:players:"+sID+":bank:item");
+    int nPlayerBankExists =  NWNX_Redis_EXISTS(RdsEdge(oPC, "player")+":bank:item");
     location lBankSpawn = GetAheadLocation(oPC);
 
     // Check area for bank creature first
@@ -54,7 +54,7 @@ void main()
         }
         // if user has bank setup already
         else {
-            string sBank = NWNX_Redis_GET("nwserver:players:"+sID+":bank:item");
+            string sBank = NWNX_Redis_GET(RdsEdge(oPC, "player")+":bank:item");
             object oBank = NWNX_Object_Deserialize(sBank);
 
             AssignCommand(oBank, ActionJumpToLocation(lBankSpawn));

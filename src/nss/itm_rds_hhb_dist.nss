@@ -8,7 +8,7 @@ void main()
 {
     object oBank = OBJECT_SELF;
     object oPC = GetLastDisturbed();
-    string sID   = GetPlayerID(oPC);
+    string sUuid   = PlayerUUID(oPC);
     string sBankSerial = NWNX_Object_Serialize(oBank);
-    NWNX_Redis_SET("nwserver:players:"+sID+":bank:item",sBankSerial);
+    NWNX_Redis_SET(RdsEdge(oPC, "player")+":bank:item",sBankSerial);
 }

@@ -4,7 +4,26 @@
 #include "rds_mod_event"
 #include "x0_i0_position"
 
-void SaveAllPC()
+// Grabbing UUID from oPC
+string PlayerUUID(object oPC);
+string PlayerUUID(object oPC){
+    object oItem = GetFirstItemInInventory(oPC);
+    string sItemTag = GetTag(oItem);
+    while (GetIsObjectValid(oItem) == TRUE)
+    {
+        if (sItemTag != "PLOT_ITEM")
+        {
+            oItem = GetNextItemInInventory(GetFirstPC());
+        }
+        else{
+            //Generate the uuid here if the player is lacking one.
+        }
+    }    
+    string sUUID = GetLocalString(oItem, "UUID");
+    return sUUID;
+}
+
+void SaveMaster()
 {
   object oPC = GetFirstPC();
   while(GetIsObjectValid(oPC))

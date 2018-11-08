@@ -11,7 +11,7 @@ void main()
         break;
 
     case 002:
-        SaveAllPC();
+        SaveMaster();
         DelayCommand(600.0, SignalEvent(OBJECT_SELF, EventUserDefined(002)));
     }
 }
