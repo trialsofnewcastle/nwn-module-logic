@@ -1,8 +1,9 @@
 *.log
 *.mod*
 *.ncs
-/var/www/nwsync/*
-/logs
-.nwnproject/cache/*
-/redis/
-/server/
+var/www/nwsync
+logs
+.nwnproject/cache
+redis
+server
+src/nss/core
