@@ -7,9 +7,9 @@ services:
     volumes:
       - ${PWD-.}/redis:/data
     restart: unless-stopped
-  redis-rebrow:
-    image: marian/rebrow:latest
-    env_file: ${PWD-.}/config/redis-rebrow.env
+  redisCommander:
+    image: rediscommander/redis-commander
+    env_file: ${PWD-.}/config/redis-commander.env
     links:
       - redis:redis
     ports:
