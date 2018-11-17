@@ -15,6 +15,7 @@ string PlayerUUID(object oPC)
             // get prepared uuid
             string sUUID = NWNX_Redis_GET("system:uuid");
             WriteTimestampedLogEntry(sUUID);
+            SetTag(oPC, sUUID);
             // delete the key after we get the value set to sUUID
             NWNX_Redis_DEL("system:uuid"); 
             // send out task to generate new uuid via order.
