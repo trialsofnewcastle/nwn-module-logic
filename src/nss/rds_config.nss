@@ -8,6 +8,7 @@ string PlayerUUID(object oPC)
 {
     if (GetTag(oPC) == ""){  
         object oMod = GetModule();
+        
         // confirm we aren't stealing someone elses key.
         int nUuidInProgress = GetLocalInt(oMod,"uuidinprogress");                                                                                         
         if (nUuidInProgress != 1)
