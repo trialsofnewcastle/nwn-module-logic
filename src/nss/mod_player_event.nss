@@ -1,51 +1,21 @@
 #include "mod_misc_color"
 #include "mod_webhook"
 #include "nwnx_admin"
-#include "rds_mod_event"
 #include "x0_i0_position"
 
-// Grabbing UUID from oPC
-string PlayerUUID(object oPC);
-string PlayerUUID(object oPC){
-    object oItem = GetFirstItemInInventory(oPC);
-    string sItemTag = GetTag(oItem);
-    while (GetIsObjectValid(oItem) == TRUE)
-    {
-        if (sItemTag != "PLOT_ITEM")
-        {
-            oItem = GetNextItemInInventory(GetFirstPC());
-        }
-        else{
-            //Generate the uuid here if the player is lacking one.
-        }
-    }    
-    string sUUID = GetLocalString(oItem, "UUID");
-    return sUUID;
-}
-
-void SaveMaster()
-{
-  object oPC = GetFirstPC();
-  while(GetIsObjectValid(oPC))
-  {
-    ExportAllCharacters();
-  }
-  SaveRedis();
-}
-
-string sPCVector(object oPC){
+string PCVector(object oPC){
   vector vPosition    = GetPosition(oPC);
   string sVector      = VectorToString(vPosition);
   return sVector;
 }
 
-string sPCFacing(object oPC){
+string PCFacing(object oPC){
   float fOrientation  = GetFacing(oPC);
   string sPcFacing    = FloatToString(fOrientation);
   return sPcFacing;
 }
 
-string sPCAreaTag(object oPC){
+string PCAreaTag(object oPC){
   object oArea        = GetArea(oPC);
   string sAreaTag     = GetTag(oArea);
   return sAreaTag;

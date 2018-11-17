@@ -1,6 +1,7 @@
+#include "rds_player_event"
 #include "nwnx_redis"
 
-#include "log"
+#include "_log"
 
 void SaveRedis()
 {
@@ -12,4 +13,11 @@ void SaveRedis()
         string sMessage = "Redis is saving : "+ sTime;
         Log(sMessage,"1");
     }
+}
+
+void MasterSave(){
+    object oPC = OBJECT_SELF;
+    SetHeartbeatLocation(oPC); 
+
+    SaveRedis();
 }
