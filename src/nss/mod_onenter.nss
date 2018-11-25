@@ -1,34 +1,32 @@
 #include "mod_player_event"
+#include "rds_player_event"
 #include "mod_webhook"
 
 void main()
 {
     object oPC = GetEnteringObject();
 
-    // Autoboot banned cd keys
+    // -- autoboot banned cd keys
     AutoBoot(oPC);
 
-    // Check if oPC name is prohibited
-    NameChecker(oPC);
-
-    // Strip all items from DM.
+    // -- strip all items from DM.
     StripDM(oPC);
 
-    // Give DM items
-    //GiveDMItems(oPC);
+    // -- give DM items
+    GiveDMItems(oPC);
 
-    // Apply starting stats
+    // -- store player information on join
+    SetGenericInformation(oPC);
+
+    // -- apply headstart
     HeadStart(oPC);
 
-    // Login Webhooks
+    // -- login Webhooks
     LoginWebhook(oPC);
 
-    // break for DM
+    // -- break for DM
     if (GetIsDM(oPC))
     {
         return;
     }
-
-    // Load saved information for player.
-    //LoadPlayerInfo(oPC);
 }

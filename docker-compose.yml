@@ -1,22 +1,20 @@
 version: '3'
 services:
+  nwn-order:
+    hostname: nwn-order
+    image: urothis/nwn-order:latest
+    env_file: ${PWD-.}/config/nwnorder.env
+    restart: always
+    ports:
+      - "5750:5750/tcp"
   redis:
-    image: healthcheck/redis:latest
+    hostname: redis
+    image: redis:latest
     command: ["redis-server", "--appendonly", "no"]
     hostname: redis
     volumes:
       - ${PWD-.}/redis:/data
-    restart: unless-stopped
-  redis-commander:
-    container_name: redis-commander
-    hostname: redis-commander
-    image: rediscommander/redis-commander:latest
-    build: .
     restart: always
-    env_file: ${PWD-.}/config/redis-commander.env
-    ports:
-    - "8081:8081"
-
   nwn-logic:
     hostname: nwnxee-server
     image: nwnxee/unified:latest
@@ -25,10 +23,6 @@ services:
     tty: true
     links:
       - "redis:redis"
-      - "nwn-order:nwn-order"
-    depends_on:
-      - nwn-order
-      - redis
     volumes:
       - ${PWD-.}/logs:/nwn/run/logs.0
       - ${PWD-.}/server/:/nwn/home
@@ -36,20 +30,3 @@ services:
     restart: always
     ports:
       - "5121:5121/udp"
-  caddy:
-    hostname: caddy
-    image: abiosoft/caddy:latest
-    ports:
-      - "8080:8080"
-    command: -root ./nwsync -port 8080 gzip
-    restart: unless-stopped
-  nwn-order:
-    hostname: nwn-order
-    image: golang:1.11.1-stretch
-    env_file: ${PWD-.}/config/nwnorder.env
-    volumes:
-      - ${PWD-.}/order:/go/order
-    working_dir: /go/order
-    command: bash -c "go mod download && go run *.go"
-    ports:
-      - "5750:5750/tcp"

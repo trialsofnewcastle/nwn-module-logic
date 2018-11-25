@@ -31,24 +31,6 @@ void main()
         AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC));
     }
 
-    if(GetIsObjectValid(oHide))
-    {
-       sName = GetLocalString(oHide, "PW-ckey");
-    }
-
-
-    else
-    {
-       SendMessageToAllDMs("Player: " + GetName(oPC) + " disconnected without a hide.");
-       return;
-    }
-
-
-    if(sName == "")
-    {
-      SendMessageToAllDMs("NULL Prop for Player Hide: " + GetName(oPC));
-      return;
-    }
 
 
     ExportSingleCharacter(oPC);

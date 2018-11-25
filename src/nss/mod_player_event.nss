@@ -3,24 +3,28 @@
 #include "nwnx_admin"
 #include "x0_i0_position"
 
+// -- get vector of the oPC
 string PCVector(object oPC){
   vector vPosition    = GetPosition(oPC);
   string sVector      = VectorToString(vPosition);
   return sVector;
 }
 
+// -- get the facing value of the oPC
 string PCFacing(object oPC){
   float fOrientation  = GetFacing(oPC);
   string sPcFacing    = FloatToString(fOrientation);
   return sPcFacing;
 }
 
+// -- get areatag of the oPC
 string PCAreaTag(object oPC){
   object oArea        = GetArea(oPC);
   string sAreaTag     = GetTag(oArea);
   return sAreaTag;
 }
 
+// -- get if a player is in an area
 int GetIsAPCInArea(object oArea, int bNPCPartyMembers = TRUE);
 int GetIsAPCInArea(object oArea, int bNPCPartyMembers = TRUE)
 {
@@ -42,6 +46,13 @@ int GetIsAPCInArea(object oArea, int bNPCPartyMembers = TRUE)
     return FALSE;
 }
 
+// -- give an authorized mortal dm items
+void GiveDMItems(object oPC)
+{
+
+}
+
+// -- apply headstart value
 void HeadStart(object oPC)
 {
     int oPCHP = GetXP(oPC);
@@ -58,6 +69,7 @@ void HeadStart(object oPC)
     }
 }
 
+// -- Will boot the player if they have the AUTOBOOT int set oPC
 void AutoBoot(object oPC)
 {
     if(GetLocalInt(oPC, "AUTOBOOT") == 1)  //If a player gets set autoboot, they can't stay connected.
@@ -66,14 +78,17 @@ void AutoBoot(object oPC)
     }
 }
 
+// -- delete character of oPC
 void DeleteCharacter(object oPC)
 {
   string sPCName = GetName(oPC);
   SendbWebhook("debug","Deleted Character: "+sPCName, "debug");
   NWNX_Administration_DeletePlayerCharacter(oPC);
+  BootPC(oPC);
 }
 
-void StripEquipped(object oPC, object oEquip)
+// -- Delete item and send message to player
+void DeleteItem(object oPC, object oEquip)
 {
  if(GetIsObjectValid(oEquip))
     {
@@ -91,27 +106,29 @@ void StripEquipped(object oPC, object oEquip)
 
 }
 
+// -- strip item from equipped slot
 void Strip(object oPC)
 {
    if (GetLocalInt(GetModule(), "DM_INV_STRIP") == TRUE)
        {
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_ARMS, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_BELT, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_BOOTS, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_CHEST, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_CLOAK, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_HEAD, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTRING, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_NECK, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
-        StripEquipped(oPC, GetItemInSlot(INVENTORY_SLOT_RIGHTRING, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_ARMS, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_BELT, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_BOOTS, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_CHEST, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_CLOAK, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_HEAD, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTRING, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_NECK, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
+        DeleteItem(oPC, GetItemInSlot(INVENTORY_SLOT_RIGHTRING, oPC));
        }
 }
 
+// -- empty out the inventory of oPC
 void EmptyInventory(object oPC)
 {
     int iGold = GetGold(oPC);
@@ -128,6 +145,7 @@ void EmptyInventory(object oPC)
     AssignCommand(oPC, TakeGoldFromCreature(iGold, oPC, TRUE));
 }
 
+// -- strip the dm of items
 void StripDM(object oPC)
 {
     // DM Inventory manage
@@ -137,34 +155,6 @@ void StripDM(object oPC)
         EmptyInventory(oPC);
         // GiveSpecialItems(oPC);
         return;
-    }
-}
-
-void NameChecker(object oPC)
-{
-    string sName = GetStringUpperCase(GetName(oPC));
-
-    if (FindSubString(sName, "SERVER")                    >= 0  ||
-        FindSubString(sName, "TITTIES")                   >= 0  ||
-        FindSubString(sName, "SMEGMA")                    >= 0  ||
-        FindSubString(sName, "HITLERDIDNOTHINGWRONG")     >= 0)
-    {
-        SpeakString("Entering Player: " + sName+
-       "NAME IS PROHIBITED.", TALKVOLUME_SHOUT);
-
-        WriteTimestampedLogEntry("Entering Player: " + sName+
-       "NAME IS PROHIBITED.");
-
-        ClearAllActions(FALSE);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oPC);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneImmobilize(), oPC);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectBlindness(), oPC);
-
-        PopUpDeathGUIPanel(oPC, FALSE, FALSE, 0, ""+
-        "Error!!!!  NAME PROHIBITED!!!");
-
-        DelayCommand(6.0, BootPC(oPC, "Error!!!!  NAME PROHIBITED!"));
-
     }
 }
 

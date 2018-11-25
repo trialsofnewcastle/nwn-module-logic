@@ -16,8 +16,12 @@ void SaveRedis()
 }
 
 void MasterSave(){
-    object oPC = OBJECT_SELF;
-    SetHeartbeatLocation(oPC); 
-
+    object oPC = GetFirstPC();
+    while(GetIsObjectValid(oPC))
+    {
+        ExportSingleCharacter(oPC);
+        SetRebootLocation(oPC);
+        oPC = GetNextPC();
+    }
     SaveRedis();
 }
