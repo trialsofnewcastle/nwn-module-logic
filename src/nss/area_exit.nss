@@ -1,10 +1,10 @@
 #include "rds_config"
-#include "mod_player_event"
+#include "order_func"
 
 void HhBankCleanup(object oArea, object oPC)
 {
     object oObject     = GetFirstObjectInArea(oArea);
-    string sUUID       = PlayerUUID(oPC);
+    string sUUID       = OrderGetUUIDPlayer(oPC);
     string sBankResRef = "BANK."+sUUID;
 
     while(GetIsObjectValid(oObject))

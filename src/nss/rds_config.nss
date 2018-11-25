@@ -1,5 +1,5 @@
 #include "nwnx_redis"
-#include "order_main"
+#include "order_func"
 
 #include "mod_player_event"
 #include "_log"
@@ -12,7 +12,7 @@ string RdsEdge(object oPC, string sType)
 {
     string Nwserver = GetModuleName();
     string CDKey    = GetPCPublicCDKey(oPC, FALSE);
-    string UUID     = PlayerUUID(oPC);
+    string UUID     = OrderGetUUIDPlayer(oPC);
 
     // ---- Build edge strings
     // -- Server

@@ -1,7 +1,8 @@
 #include "nwnx_time"
-#include "mod_webhook"
 #include "nwnx_redis"
 #include "nwnx_events"
+
+#include "mod_webhook"
 
 void main()
 {
@@ -11,7 +12,7 @@ void main()
 
     // -- redis stats
     string sDBSize = IntToString(NWNX_Redis_DBSIZE());
-    WriteTimestampedLogEntry("Redis keys stored: "sDBSize);
+    WriteTimestampedLogEntry("Redis keys stored: " + sDBSize);
 
     object oMod = GetModule();
 
