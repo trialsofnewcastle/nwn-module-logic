@@ -7,9 +7,11 @@
 
 void main()
 {
+
   // -- this is triggered via nwnxee redis pubusb. Do not trigger elsewhere.
   struct NWNX_Redis_PubSubMessageData data = NWNX_Redis_GetPubSubMessageData();
-  
+  WriteTimestampedLogEntry(data.channel);
+
   // -- return function triggers
   if(data.channel == "return")
   {

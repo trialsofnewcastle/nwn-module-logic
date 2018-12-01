@@ -2,15 +2,32 @@
 #include "rds_config"
 #include "mod_player_event"
 
+// -- get player count
+int GetPlayerCount(int SaveToRedis);
+int GetPlayerCount(int SaveToRedis){
+  int nPCs = 0;
+  object oPC = GetFirstPC();
+  while (GetIsObjectValid(oPC) == TRUE)
+  {
+    nPCs = nPCs+1; // nPCs++;
+    oPC = GetNextPC();
+  }
+  if (SaveToRedis == 1){
+    string sPlayerCount = IntToString(nPCs);
+    NWNX_redis_SET(RdsEdgeServer("server")+":playercount",sPlayerCount);
+  }
+  return nPCs;
+}
+
 // -- Store some info on login
 void SetGenericInformation(object oPC)
 {
   // -- Only set if we have a uuid
   if (GetTag(oPC) != ""){
     // -- Set Redis
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":information:name",GetPCPlayerName(oPC));
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":information:ip",GetPCIPAddress(oPC));
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":information:cdkey",GetPCPublicCDKey(oPC, FALSE));      
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":information:name",GetPCPlayerName(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":information:ip",GetPCIPAddress(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":information:cdkey",GetPCPublicCDKey(oPC, FALSE));      
   }
   else{
   }
@@ -21,9 +38,9 @@ void SetHeartbeatLocation(object oPC){
   // -- Only set if we have a uuid
   if (GetTag(oPC) != ""){
     // -- Set Redis
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:heartbeat:areatag",PCAreaTag(oPC));
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:heartbeat:vector",PCVector(oPC));
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:heartbeat:facing",PCFacing(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:heartbeat:areatag",PCAreaTag(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:heartbeat:vector",PCVector(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:heartbeat:facing",PCFacing(oPC));
   }
   else{
   }
@@ -34,9 +51,9 @@ void SetSavepointLocation(object oPC){
   // -- Only set if we have a uuid
   if (GetTag(oPC) != ""){
     // -- Set Redis
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:savepoint:areatag",PCAreaTag(oPC));
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:savepoint:vector",PCVector(oPC));
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:savepoint:facing",PCFacing(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:savepoint:areatag",PCAreaTag(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:savepoint:vector",PCVector(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:savepoint:facing",PCFacing(oPC));
   }
   else{
   }
@@ -47,9 +64,9 @@ void SetRebootLocation(object oPC){
   // -- Only set if we have a uuid
   if (GetTag(oPC) != ""){
     // -- Set Redis
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:reboot:facing",PCAreaTag(oPC));
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:reboot:vector",PCVector(oPC));
-    NWNX_Redis_SET(RdsEdge(oPC, "player")+":save:reboot:facing",PCFacing(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:reboot:facing",PCAreaTag(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:reboot:vector",PCVector(oPC));
+    NWNX_Redis_SET(RdsEdgePlayer(oPC, "player")+":save:reboot:facing",PCFacing(oPC));
   }
   else{
   }

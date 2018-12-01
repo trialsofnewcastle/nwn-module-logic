@@ -1,12 +1,5 @@
 version: '3'
 services:
-  nwn-order:
-    hostname: nwn-order
-    image: urothis/nwn-order:latest
-    env_file: ${PWD-.}/config/nwnorder.env
-    restart: always
-    ports:
-      - "5750:5750/tcp"
   redis:
     hostname: redis
     image: redis:latest
@@ -21,11 +14,6 @@ services:
     hostname: nwnxee-server
     image: nwnxee/unified:latest
     env_file: ${PWD-.}/config/nwserver.env
-    stdin_open: true
-    tty: true
-    links:
-      - redis:redis
-      - nwn-order:nwn-order
     volumes:
       - ${PWD-.}/logs:/nwn/run/logs.0
       - ${PWD-.}/server/:/nwn/home
@@ -33,3 +21,10 @@ services:
     restart: always
     ports:
       - "5121:5121/udp"
+  nwn-order:
+    hostname: nwn-order
+    image: urothis/nwn-order:latest
+    env_file: ${PWD-.}/config/nwnorder.env
+    restart: always
+    ports:
+      - "5750:5750/tcp"

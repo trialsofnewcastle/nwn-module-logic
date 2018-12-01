@@ -1,0 +1,44 @@
+version: '3'
+services:
+  db:
+    image: mysql/mysql-server:5.7
+    env_file: ${PWD-.}/config/db.env
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - ${PWD-.}/mysql-db:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+  redis:
+    image: healthcheck/redis:latest
+    command: ["redis-server", "--appendonly", "no"]
+    hostname: redis
+    volumes:
+      - ${PWD-.}/redis:/data
+    restart: unless-stopped
+  redisCommander:
+    image: rediscommander/redis-commander
+    env_file: ${PWD-.}/config/redis-commander.env
+    links:
+      - redis:redis
+    ports:
+      - "8081:8081"
+  nwnxee-server:
+    image: nwnxee/unified:latest
+    env_file: ${PWD-.}/config/nwserver.env
+    stdin_open: true
+    tty: true
+    links:
+      - "db:db"
+      - "redis:redis"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ${PWD-.}/logs:/nwn/run/logs.0
+      - ${PWD-.}/server/:/nwn/home
+      - ${PWD-.}/logs:/nwn/data/bin/linux-x86/logs.0
+    restart: always
+    ports:
+      - "5121:5121/udp"

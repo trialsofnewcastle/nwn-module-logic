@@ -1,7 +1,7 @@
-#include "nwnx_redis"
-#include "mod_player_event"
-#include "rds_player_event"
-#include "nwnx_object"
+//#include "nwnx_redis"
+//#include "mod_player_event"
+//#include "rds_player_event"
+//#include "nwnx_object"
 
 // creature ondisturb
 //void main()

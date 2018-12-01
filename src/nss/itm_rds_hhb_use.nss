@@ -1,27 +1,27 @@
-#include "nwnx_redis"
-#include "nwnx_object"
-#include "rds_player_event"
-#include "x0_i0_position"
-#include "mod_player_event"
-
-
-int GetIsPlayerBankInArea(object oArea, string sResRef, object oPC);
-int GetIsPlayerBankInArea(object oArea, string sResRef, object oPC)
-{
-    string sUuid  = PlayerUUID(oPC);
-    string sBankResRef = "system_bank_"+sUuid;
-
-    object oObject = GetFirstObjectInArea(oArea);
-    while(GetIsObjectValid(oObject))
-    {
-         if(GetTag(oObject) == sBankResRef)
-         {
-             return 1;
-         }
-         object oObject = GetNextObjectInArea(oArea);
-    }
-    return 0;
-}
+//#include "nwnx_redis"
+//#include "nwnx_object"
+//#include "rds_player_event"
+//#include "x0_i0_position"
+//#include "mod_player_event"
+//
+//
+//int GetIsPlayerBankInArea(object oArea, string sResRef, object oPC);
+//int GetIsPlayerBankInArea(object oArea, string sResRef, object oPC)
+//{
+//    string sUuid  = PlayerUUID(oPC);
+//    string sBankResRef = "system_bank_"+sUuid;
+//
+//    object oObject = GetFirstObjectInArea(oArea);
+//    while(GetIsObjectValid(oObject))
+//    {
+//         if(GetTag(oObject) == sBankResRef)
+//         {
+//             return 1;
+//         }
+//         object oObject = GetNextObjectInArea(oArea);
+//    }
+//    return 0;
+//}
 
 
 //void main()

@@ -1,8 +1,7 @@
-#include "rds_config"
 #include "order_func"
+#include "mod_player_event"
 
-void HhBankCleanup(object oArea, object oPC)
-{
+void HhBankCleanup(object oArea, object oPC){
     object oObject     = GetFirstObjectInArea(oArea);
     string sUUID       = OrderGetUUIDPlayer(oPC);
     string sBankResRef = "BANK."+sUUID;
@@ -17,16 +16,13 @@ void HhBankCleanup(object oArea, object oPC)
                 DestroyObject(oObject);
             }
             object oObject = GetNextObjectInArea(oArea);
-        }
-
-        else{
+        }else{
             SetLocalInt(oArea,"BANKINAREA",0);
         }
     }
 }
 
-void main()
-{
+void main(){
     object oArea = OBJECT_SELF;
     object oPC = GetExitingObject();
 
